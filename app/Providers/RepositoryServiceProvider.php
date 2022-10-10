@@ -15,6 +15,7 @@ class RepositoryServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        //user repository
         $this->app->bind(UserRepositoryInterface::class, UserRepository::class);
     }
 
