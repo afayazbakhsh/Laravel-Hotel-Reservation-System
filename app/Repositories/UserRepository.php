@@ -14,7 +14,7 @@ class UserRepository implements UserRepositoryInterface
         $this->users = $users;
     }
 
-    //get user with email
+    //get user by email
     public function getUserByEmail($userEmail)
     {
         return $this->users->where('email',$userEmail)->first();
