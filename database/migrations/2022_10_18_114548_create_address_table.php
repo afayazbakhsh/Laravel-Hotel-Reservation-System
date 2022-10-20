@@ -17,8 +17,8 @@ return new class extends Migration
             $table->id();
             $table->morphs('addressable');
             $table->string('address');
-            $table->double('lat')->nullable();
-            $table->double('lng')->nullable();
+            $table->double('latitude')->nullable();
+            $table->double('longitude')->nullable();
             $table->timestamps();
         });
     }

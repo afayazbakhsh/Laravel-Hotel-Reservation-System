@@ -9,7 +9,8 @@ class UserRepository implements UserRepositoryInterface
 {
     protected $users;
 
-    public function __construct(User $users){
+    public function __construct(User $users)
+    {
 
         $this->users = $users;
     }
@@ -17,6 +18,6 @@ class UserRepository implements UserRepositoryInterface
     //get user by email
     public function getUserByEmail($userEmail)
     {
-        return $this->users->where('email',$userEmail)->first();
+        return $this->users->where('email', $userEmail)->first();
     }
 }

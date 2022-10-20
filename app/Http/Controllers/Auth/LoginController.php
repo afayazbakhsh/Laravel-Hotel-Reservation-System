@@ -15,6 +15,7 @@ class LoginController extends Controller
     private UserRepositoryInterface $userRepository;
 
     public function __construct(UserRepositoryInterface $userRepository){
+
         //object of user repository
         $this->userRepository = $userRepository;
     }
