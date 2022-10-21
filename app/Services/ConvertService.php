@@ -19,19 +19,15 @@ class ConvertService implements ConvertServiceInterface
         return $data->getActiveSheet()->toArray();
     }
 
-    //convert letter words to persion
-    function to_fa_letter($string) {
+    //convert arabic words to persion
+    public function ArabicWordToPersian($string)
+    {
+        $string = trim($string);
 
         $arabic_letters = ['ي', 'ك', 'ؤ', 'ۀ'];
 
         $persian_letters = ['ی', 'ک', 'و', 'ه'];
 
         return str_replace($arabic_letters, $persian_letters, $string);
-    }
-
-    //convert arabic words to persion
-    public function ArabicWordToPersian($string)
-    {
-        return $this->to_fa_letter(trim($string));
     }
 }
