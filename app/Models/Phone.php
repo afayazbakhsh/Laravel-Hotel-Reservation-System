@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Image extends Model
+class Phone extends Model
 {
     use HasFactory;
 
-    public function imageable()
+    public function phoneable()
     {
         return $this->morphTo();
     }
