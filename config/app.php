@@ -194,6 +194,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\HorizonServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        Spatie\Permission\PermissionServiceProvider::class,
         //Repository Provider
         App\Providers\RepositoryServiceProvider::class,
 
