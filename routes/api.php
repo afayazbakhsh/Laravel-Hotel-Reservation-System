@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
+use App\Http\Controllers\TestController;
 use App\Http\Controllers\User\UserController;
 /*
 |--------------------------------------------------------------------------
@@ -33,8 +34,13 @@ Route::prefix('v1')->group(function(){
         Route::middleware('auth:sanctum')->get('logout',[LogoutController::class,'logout']);
     });
 
-    //Protected Route User
-    Route::middleware('auth:sanctum')->prefix('users')->group(function(){
+    //Protected User Routes
+    Route::middleware(['auth:sanctum'])->prefix('users')->group(function(){
         Route::resource('/',UserController::class);
+    });
+
+    //Protected Route test
+    Route::middleware(['auth:sanctum','role:User'])->prefix('tests')->group(function(){
+        Route::resource('/',TestController::class);
     });
 });

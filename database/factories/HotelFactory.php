@@ -2,7 +2,9 @@
 
 namespace Database\Factories;
 
+use App\Models\City;
 use App\Models\Hotel;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -21,8 +23,8 @@ class HotelFactory extends Factory
     {
         return [
             'name' => fake()->name(),
-            'user_id' => 1,
-            'city_id'=> rand(1,1132),
+            'user_id' => User::all()->random()->id,
+            'city_id'=> City::all()->random()->id,
         ];
     }
 }
