@@ -12,3 +12,7 @@ Initialize Project
 <p>php artisan db:seed Database\\Seeders\\Hotels\\AddressSeeder</p>
 <p>php artisan db:seed Database\\Seeders\\Hotels\\PhoneSeeder</p>
 <p>php artisan db:seed Database\\Seeders\\Hotels\\EmailSeeder</p>
+
+<b>or just run</b>
+
+<p> php artisan db:seed </p>
