@@ -31,7 +31,6 @@ class DatabaseSeeder extends Seeder
             EmailSeeder::class,
             PhoneSeeder::class,
             AddressSeeder::class,
-
         ]);
     }
 }
