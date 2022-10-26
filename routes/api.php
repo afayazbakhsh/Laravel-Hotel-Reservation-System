@@ -6,7 +6,9 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\TestController;
-use App\Http\Controllers\User\UserController;
+use App\Http\Controllers\Users\UserController;
+use App\Models\User;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -34,10 +36,8 @@ Route::prefix('v1')->group(function(){
         Route::middleware('auth:sanctum')->get('logout',[LogoutController::class,'logout']);
     });
 
-    //Protected User Routes
-    Route::middleware(['auth:sanctum'])->prefix('users')->group(function(){
-        Route::resource('/',UserController::class);
-    });
+    //User Routes
+    Route::resource('users',UserController::class);
 
     //Protected Route test
     Route::middleware(['auth:sanctum','role:User'])->prefix('tests')->group(function(){
