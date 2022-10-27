@@ -23,4 +23,9 @@ class Hotel extends Model
     {
         return $this->morphMany(Email::class, 'emailable');
     }
+
+    public function city()
+    {
+        return $this->belongsTo(City::class);
+    }
 }
