@@ -16,13 +16,13 @@ class EmailSeeder extends Seeder
     public function run()
     {
         $hotels = Hotel::all();
-
+        $i = 0;
         foreach ($hotels as $hotel) {
 
             $hotel->emails()->createMany([
 
-                ['email' => 'amirtest1@gmail.com'],
-                ['email' => 'amirtest2@gmail.com'],
+                ['email' => 'amirtestr'.$i++.'@gmail.com'],
+                ['email' => 'amirtest'.$i.'@gmail.com'],
             ]);
         }
     }

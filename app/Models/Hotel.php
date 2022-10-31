@@ -9,6 +9,13 @@ class Hotel extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'name',
+        'city_id',
+        'user_id',
+    ];
+
+
     public function address()
     {
         return $this->morphOne(Address::class, 'addressable');
@@ -27,5 +34,15 @@ class Hotel extends Model
     public function city()
     {
         return $this->belongsTo(City::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function newestEmail(){
+
+        return $this->morphOne(Email::class,'emailable')->latestOfMany();
     }
 }

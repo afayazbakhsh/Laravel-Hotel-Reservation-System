@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
+use App\Http\Controllers\Emails\EmailController;
 use App\Http\Controllers\Hotels\HotelController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\Users\UserController;
@@ -41,6 +42,8 @@ Route::prefix('v1')->group(function(){
     Route::resource('users',UserController::class);
     //Hotel Routes
     Route::resource('hotels',HotelController::class);
+    //Email Routes
+    Route::resource('emails',EmailController::class);
 
     //Protected Route test
     Route::middleware(['auth:sanctum','role:User'])->prefix('tests')->group(function(){

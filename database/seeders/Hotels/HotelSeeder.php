@@ -15,6 +15,6 @@ class HotelSeeder extends Seeder
      */
     public function run()
     {
-        return Hotel::factory()->times(100)->create();
+        return Hotel::factory()->times(10)->create();
     }
 }

@@ -1,25 +1,21 @@
 <?php
 
-namespace App\Http\Controllers\Users;
+namespace App\Http\Controllers\Emails;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Auth\RegisterRequest;
-use App\Models\User;
+use App\Models\Email;
 use Illuminate\Http\Request;
-use Spatie\Permission\Models\Role;
 
-class UserController extends Controller
+class EmailController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-
-    //get all user with their hotels
     public function index()
     {
-        return User::with('hotels')->get();
+        return Email::with('emailable')->get();
     }
 
     /**
@@ -38,18 +34,9 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(RegisterRequest $request)
+    public function store(Request $request)
     {
-
-        if (auth('sanctum')->user()->hasRole('Super Admin')) {
-
-            $user = User::create($request->validated());
-            $user->assignRole($request->role);
-            // Create access token
-            $token = $user->createToken('auth_token')->plainTextToken;
-            return response(['user' => $user, 'access_token' => $token], 201);
-
-        }
+        //
     }
 
     /**
@@ -60,8 +47,7 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $user = User::find($id);
-        return response(['user' => $user, 200]);
+        //
     }
 
     /**
@@ -72,7 +58,7 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-
+        //
     }
 
     /**
@@ -95,8 +81,6 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        $user = User::findOrFail($id);
-        $user->delete();
-        return response(['message' => 'Deleted successfuly', 200]);
+        //
     }
 }

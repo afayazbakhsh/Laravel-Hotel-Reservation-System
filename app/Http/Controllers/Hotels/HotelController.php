@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers\Hotels;
 
+use App\Events\Hotel\UpdateHotel;
 use App\Http\Controllers\Controller;
-use App\Models\City;
+use App\Http\Requests\Hotel\StoreHotelRequest;
+use App\Http\Requests\Hotel\UpdateHotelRequest;
+use App\Interfaces\HotelRepositoryInterface;
 use App\Models\Hotel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class HotelController extends Controller
 {
@@ -14,6 +18,12 @@ class HotelController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public $HotelRepository;
+    public function __construct(HotelRepositoryInterface $HotelRepository)
+    {
+        $this->HotelRepository = $HotelRepository;
+    }
+
     public function index()
     {
         return Hotel::all();
@@ -26,7 +36,6 @@ class HotelController extends Controller
      */
     public function create()
     {
-        //
     }
 
     /**
@@ -35,9 +44,15 @@ class HotelController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreHotelRequest $request)
     {
-        //
+        $hotel = Hotel::create($request->validated());
+
+        if ($request->emails) {
+            $this->HotelRepository->createEmail($hotel, $request->emails);
+        }
+        $hotel->emails;
+        return response(compact('hotel'), 201);
     }
 
     /**
@@ -48,7 +63,17 @@ class HotelController extends Controller
      */
     public function show($id)
     {
-        $hotel = Hotel::with(['emails','phones','address','city'])->find($id);
+        $hotel = Hotel::with([
+            'emails' => function ($query) {
+
+                $query->orderBy('created_at', 'desc');
+
+            }, 'phones' => function ($query) {
+
+                $query->orderBy('created_at', 'desc');
+
+            }, 'address', 'city'])->find($id);
+
         return response([compact(['hotel']), 200]);
     }
 
@@ -70,9 +95,13 @@ class HotelController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateHotelRequest $request, $id)
     {
-        //
+        $hotel = Hotel::findOrFail($id);
+        $hotel->update($request->validated());
+        $hotel->emails;
+
+        return response([compact('hotel')]);
     }
 
     /**
@@ -83,6 +112,23 @@ class HotelController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Hotel::findOrFail($id)->delete();
+        return response(['message' => 'Deleted successfuly', 200]);
+    }
+
+
+    public function search(Request $request)
+    {
+        $hotels = Hotel::query();
+
+        if ($request->get('name')) {
+
+            $hotels->where('name', '%like', $request->name);
+        }
+
+        if ($request->get('city_id')) {
+
+            $hotels->where('city_id', $request->city_id);
+        }
     }
 }
