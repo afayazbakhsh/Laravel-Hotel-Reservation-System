@@ -8,6 +8,7 @@ use App\Http\Requests\Hotel\StoreHotelRequest;
 use App\Http\Requests\Hotel\UpdateHotelRequest;
 use App\Interfaces\HotelRepositoryInterface;
 use App\Models\Hotel;
+use App\Models\Requester;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
@@ -44,14 +45,15 @@ class HotelController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreHotelRequest $request)
+    public function store(Requester $requester, StoreHotelRequest $request)
     {
-        $hotel = Hotel::create($request->validated());
+        $hotel = $requester->hotels()->create($request->validated());
 
         if ($request->emails) {
             $this->HotelRepository->createEmail($hotel, $request->emails);
         }
         $hotel->emails;
+        $hotel->requester;
         return response(compact('hotel'), 201);
     }
 
@@ -67,12 +69,12 @@ class HotelController extends Controller
             'emails' => function ($query) {
 
                 $query->orderBy('created_at', 'desc');
-
-            }, 'phones' => function ($query) {
+            },
+            'phones' => function ($query) {
 
                 $query->orderBy('created_at', 'desc');
-
-            }, 'address', 'city'])->find($id);
+            },
+            'address', 'city'])->find($id);
 
         return response([compact(['hotel']), 200]);
     }
