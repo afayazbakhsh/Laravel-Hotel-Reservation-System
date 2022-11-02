@@ -16,7 +16,7 @@ class RegisterController extends Controller
 
         $user = User::create($request->validated());
         // See permissionSeeder for user permissions
-        $user->assignRole('User');
+        $user->assignRole('user');
         // Create access token
         $token = $user->createToken('auth_token')->plainTextToken;
         return response(['user' => $user, 'access_token' => $token], 201);
