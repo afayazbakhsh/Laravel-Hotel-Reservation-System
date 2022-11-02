@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Address\AddressController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\RegisterController;
@@ -7,7 +8,6 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Emails\EmailController;
 use App\Http\Controllers\Hotels\HotelController;
-use App\Http\Controllers\TestController;
 use App\Http\Controllers\Users\UserController;
 use App\Models\User;
 
