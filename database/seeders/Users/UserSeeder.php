@@ -6,7 +6,6 @@ use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Log;
 
 class UserSeeder extends Seeder
 {
@@ -23,5 +22,8 @@ class UserSeeder extends Seeder
         ]);
         //create token
         $token = $user->createToken('auth_token')->plainTextToken;
+        $user->assignRole('super admin');
+
+        return User::factory()->times(100)->create();
     }
 }
