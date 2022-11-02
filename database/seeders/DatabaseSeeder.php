@@ -5,6 +5,7 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 use Database\Seeders\Cities\CitySeeder;
+use Database\Seeders\Hosts\HostSeeder;
 use Database\Seeders\Hotels\AddressSeeder;
 use Database\Seeders\Hotels\EmailSeeder;
 use Database\Seeders\Hotels\HotelSeeder;
@@ -23,14 +24,11 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         return $this->call([
-            UserSeeder::class,
             PermissionSeeder::class,
+            UserSeeder::class,
             ProvinceSeeder::class,
             CitySeeder::class,
-            HotelSeeder::class,
-            EmailSeeder::class,
-            PhoneSeeder::class,
-            AddressSeeder::class,
+            HostSeeder::class,
         ]);
     }
 }
