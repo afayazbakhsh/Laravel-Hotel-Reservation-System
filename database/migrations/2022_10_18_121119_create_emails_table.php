@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('emails', function (Blueprint $table) {
             $table->id();
             $table->morphs('emailable');
-            $table->string('email')->unique();
+            $table->string('email');
             $table->timestamps();
         });
     }
