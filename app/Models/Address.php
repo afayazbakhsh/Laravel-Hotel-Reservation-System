@@ -9,6 +9,13 @@ class Address extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'address',
+        'latitude',
+        'longitude',
+    ];
+
+
     public function addressable()
     {
         return $this->morphTo();
