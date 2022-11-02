@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers\Hotels;
 
-use App\Events\Hotel\UpdateHotel;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Hotel\StoreHotelRequest;
 use App\Http\Requests\Hotel\UpdateHotelRequest;
 use App\Interfaces\HotelRepositoryInterface;
+use App\Models\Host;
 use App\Models\Hotel;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 
 class HotelController extends Controller
 {
@@ -44,14 +43,16 @@ class HotelController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreHotelRequest $request)
+    public function store(Host $host, StoreHotelRequest $request)
     {
-        $hotel = Hotel::create($request->validated());
+        $hotel = $host->hotels()->create($request->validated());
 
         if ($request->emails) {
+
             $this->HotelRepository->createEmail($hotel, $request->emails);
         }
         $hotel->emails;
+        $hotel->host;
         return response(compact('hotel'), 201);
     }
 
@@ -67,12 +68,13 @@ class HotelController extends Controller
             'emails' => function ($query) {
 
                 $query->orderBy('created_at', 'desc');
-
-            }, 'phones' => function ($query) {
+            },
+            'phones' => function ($query) {
 
                 $query->orderBy('created_at', 'desc');
-
-            }, 'address', 'city'])->find($id);
+            },
+            'address', 'city'
+        ])->find($id);
 
         return response([compact(['hotel']), 200]);
     }

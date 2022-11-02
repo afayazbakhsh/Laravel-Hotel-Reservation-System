@@ -13,13 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('hotels', function (Blueprint $table) {
+        Schema::create('features', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->foreignId('host_id')->constrained();
-            $table->foreignId('city_id')->constrained();
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
@@ -30,6 +26,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('hotels');
+        Schema::dropIfExists('features');
     }
 };

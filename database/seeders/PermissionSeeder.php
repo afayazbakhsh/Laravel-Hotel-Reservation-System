@@ -30,7 +30,7 @@ class PermissionSeeder extends Seeder
         }
 
         // Create user role
-        $role = Role::create(['name' => 'User']);
+        $role = Role::create(['name' => 'user']);
         $userPermissions = [
 
             'comment_create',
@@ -40,6 +40,9 @@ class PermissionSeeder extends Seeder
         $role->syncPermissions($userPermissions);
 
         // Create super admin role
-        $role = Role::create(['name' => 'Super Admin']);
+        $role = Role::create(['name' => 'super admin']);
+
+        // Create requester role
+        $role = Role::create(['name' => 'customer']);
     }
 }
