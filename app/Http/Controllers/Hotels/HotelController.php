@@ -25,7 +25,7 @@ class HotelController extends Controller
 
     public function index()
     {
-        return Hotel::all();
+        return Hotel::where('is_confirm', true)->with(['emails','address'])->latest()->get();
     }
 
     /**

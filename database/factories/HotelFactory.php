@@ -3,12 +3,9 @@
 namespace Database\Factories;
 
 use App\Models\City;
-use App\Models\Host;
 use App\Models\Hotel;
-use App\Models\Requester;
-use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
-
+use Illuminate\Support\Str;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Model>
  */
@@ -23,8 +20,11 @@ class HotelFactory extends Factory
 
     public function definition()
     {
+        $title = fake()->title();
         return [
             'name' => fake()->name(),
+            'title' => $title,
+            'slug' => Str::slug($title),
             'city_id'=> City::all()->random()->id,
         ];
     }

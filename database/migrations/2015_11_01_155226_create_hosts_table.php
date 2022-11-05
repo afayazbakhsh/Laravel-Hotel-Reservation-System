@@ -20,6 +20,7 @@ return new class extends Migration
             $table->integer('national_code');
             $table->integer('phone_number');
             $table->string('email');
+            $table->boolean('is_confirm')->default(false);
             $table->timestamps();
             $table->softDeletes();
         });

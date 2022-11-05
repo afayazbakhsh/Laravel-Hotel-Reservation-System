@@ -7,6 +7,7 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Emails\EmailController;
+use App\Http\Controllers\Hosts\HostController;
 use App\Http\Controllers\Hotels\HotelController;
 use App\Http\Controllers\Users\UserController;
 use App\Models\User;
@@ -40,6 +41,8 @@ Route::prefix('v1')->group(function(){
 
     //User Routes
     Route::resource('users',UserController::class);
+    //Host Routes
+    Route::resource('hosts',HostController::class);
     //Hotel Routes
     Route::resource('hotels',HotelController::class);
     //Email Routes

@@ -43,12 +43,16 @@ class Hotel extends Model
 
     public function newestEmail()
     {
-
         return $this->morphOne(Email::class, 'emailable')->latestOfMany();
     }
 
     public function Host()
     {
         return $this->belongsTo(Host::class);
+    }
+
+    public function features()
+    {
+        return $this->hasMany(Feature::class);
     }
 }

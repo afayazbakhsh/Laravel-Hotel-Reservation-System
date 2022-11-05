@@ -19,7 +19,7 @@ class UserController extends Controller
     //get all user with their hotels
     public function index()
     {
-        return User::with('hotels')->get();
+        return User::all();
     }
 
     /**
