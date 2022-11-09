@@ -7,6 +7,8 @@ use App\Models\Email;
 use App\Models\Host;
 use App\Models\Hotel;
 use App\Models\Phone;
+use App\Models\Room;
+use App\Models\RoomType;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -19,15 +21,16 @@ class HostSeeder extends Seeder
      */
     public function run()
     {
+        $types = RoomType::all();
         // Create host factory with hotel
-        return Host::factory()->times(10)->create()->each(function ($host) {
+        return Host::factory()->times(100)->create()->each(function ($host) use ($types) {
 
             // Create hotel with child entity
             Hotel::factory(1)->create([
 
                 'host_id' => $host->id,
 
-            ])->each(function ($hotel) {
+            ])->each(function ($hotel) use ($types) {
 
                 Address::factory(1)->create([
                     'addressable_id' => $hotel->id,
@@ -42,6 +45,11 @@ class HostSeeder extends Seeder
                 Phone::factory(2)->create([
                     'phoneable_id' => $hotel->id,
                     'phoneable_type' => 'App\Models\Hotel'
+                ]);
+
+                Room::factory(rand(1,4))->create([
+                    'hotel_id' => $hotel->id,
+                    'room_type_id' => RoomType::all()->random()->id
                 ]);
             });
         });
