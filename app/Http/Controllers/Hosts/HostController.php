@@ -8,8 +8,15 @@ use Illuminate\Http\Request;
 
 class HostController extends Controller
 {
-    public function index(){
+    public function index()
+    {
 
-        return Host::where('is_confirm',false)->with('hotel')->get();
+        return Host::where('is_confirm', false)->with([
+            'hotel' => [
+                'address',
+                'emails',
+                'phones'
+            ]
+        ])->get();
     }
 }
