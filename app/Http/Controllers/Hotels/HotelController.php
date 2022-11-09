@@ -9,6 +9,7 @@ use App\Interfaces\HotelRepositoryInterface;
 use App\Models\Host;
 use App\Models\Hotel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class HotelController extends Controller
 {
@@ -23,9 +24,40 @@ class HotelController extends Controller
         $this->HotelRepository = $HotelRepository;
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        return Hotel::where('is_confirm', true)->with(['emails','address'])->latest()->get();
+        $hotels =  Hotel::where('is_confirm', false)->with([
+            'emails:id,email,emailable_id',
+            'address:id,address,addressable_id',
+            'city'
+        ])->latest()->get();
+
+        // if chose city
+        if ($request->has('city_id')) {
+
+            $hotels = $hotels->where('city_id', $request->get('city_id'));
+        }
+
+        // Searched text
+        if ($request->has('s')) {
+
+            $query = strtolower($request->get('s'));
+            $hotels = $hotels->filter(function ($hotel) use ($query) {
+
+                if (Str::contains(strtolower($hotel->title), $query)) {
+
+                    return true;
+                }
+
+                if (Str::contains(strtolower($hotel->name), $query)) {
+
+                    return true;
+                }
+
+                return false;
+            });
+        }
+        return response(compact('hotels'), 200);
     }
 
     /**
@@ -123,12 +155,12 @@ class HotelController extends Controller
     {
         $hotels = Hotel::query();
 
-        if ($request->get('name')) {
+        if ($request->has('name')) {
 
             $hotels->where('name', '%like', $request->name);
         }
 
-        if ($request->get('city_id')) {
+        if ($request->has('city_id')) {
 
             $hotels->where('city_id', $request->city_id);
         }
