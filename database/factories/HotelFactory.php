@@ -24,6 +24,7 @@ class HotelFactory extends Factory
         return [
             'name' => fake()->name(),
             'title' => $title,
+            'description' => fake()->text(),
             'slug' => Str::slug($title),
             'city_id'=> City::all()->random()->id,
         ];
