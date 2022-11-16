@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Services\Hotel;
 
 use App\Models\Hotel;
-use App\Interfaces\HotelRepositoryInterface;
+use App\Models\Host;
 
-class HotelRepository implements HotelRepositoryInterface
+class HotelService
 {
     protected $hotel;
 
@@ -21,5 +21,13 @@ class HotelRepository implements HotelRepositoryInterface
                 'email' => $email,
             ]);
         }
+    }
+
+    public function createHotel(Host $host, array $hotel)
+    {
+        return $host->hotel()->create([
+            'name'      => $hotel['name'],
+            'city_id'   => $hotel['city_id'],
+        ]);
     }
 }

@@ -2,7 +2,11 @@
 
 namespace App\Providers;
 
+use App\Events\Host\HostRequestedRegistration;
+use App\Events\Hotel\HotelRequestedRegistration;
 use App\Events\Hotel\UpdateHotel;
+use App\Listeners\Host\CreateHost;
+use App\Listeners\Hotel\CreateHotel;
 use App\Listeners\Hotel\UpdateEmail;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -22,6 +26,16 @@ class EventServiceProvider extends ServiceProvider
         ],
         UpdateHotel::class => [
             UpdateEmail::class,
+        ],
+
+        HostRequestedRegistration::class => [
+
+            CreateHost::class,
+        ],
+
+        HotelRequestedRegistration::class => [
+
+            CreateHotel::class,
         ],
     ];
 

@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Hotels;
+namespace App\Http\Controllers\Hotel;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Hotel\StoreHotelRequest;
 use App\Http\Requests\Hotel\UpdateHotelRequest;
-use App\Interfaces\HotelRepositoryInterface;
 use App\Models\Host;
 use App\Models\Hotel;
+use App\Services\Hotel\HotelService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -18,17 +18,17 @@ class HotelController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public $HotelRepository;
-    public function __construct(HotelRepositoryInterface $HotelRepository)
+    public $hotelService;
+    public function __construct(HotelService $hotelService)
     {
-        $this->HotelRepository = $HotelRepository;
+        $this->hotelService = $hotelService;
     }
 
     public function index(Request $request)
     {
         $hotels =  Hotel::where('is_confirm', false)->with([
-            'emails:id,email,emailable_id',
-            'address:id,address,addressable_id',
+            'emails:id,email,emailable_id,emailable_type',
+            'address:id,address,addressable_id,addressable_type',
             'city'
         ])->latest()->get();
 
@@ -81,7 +81,7 @@ class HotelController extends Controller
 
         if ($request->emails) {
 
-            $this->HotelRepository->createEmail($hotel, $request->emails);
+            $this->hotelService->createEmail($hotel, $request->emails);
         }
         $hotel->emails;
         $hotel->host;

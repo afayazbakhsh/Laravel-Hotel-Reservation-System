@@ -15,11 +15,11 @@ return new class extends Migration
     {
         Schema::create('hotels', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name')->nullable();
             $table->boolean('is_confirm')->default(FALSE);
-            $table->string('title');
-            $table->string('slug');
-            $table->string('description');
+            $table->string('title')->nullable();
+            $table->string('slug')->nullable();
+            $table->string('description')->nullable();
             $table->string('motto')->nullable();
             $table->foreignId('host_id')->constrained();
             $table->foreignId('city_id')->constrained();
