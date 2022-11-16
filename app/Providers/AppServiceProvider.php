@@ -4,6 +4,10 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use App\Interfaces\ConvertServiceInterface;
+use App\Interfaces\HostServiceInterface;
+use App\Interfaces\HotelServiceInterface;
+use App\Repositories\HostService;
+use App\Repositories\HotelService;
 use App\Services\ConvertService;
 
 class AppServiceProvider extends ServiceProvider

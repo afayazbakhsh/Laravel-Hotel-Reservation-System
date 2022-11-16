@@ -46,7 +46,7 @@ class Hotel extends Model
         return $this->morphOne(Email::class, 'emailable')->latestOfMany();
     }
 
-    public function Host()
+    public function host()
     {
         return $this->belongsTo(Host::class);
     }

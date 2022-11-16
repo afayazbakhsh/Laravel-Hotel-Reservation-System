@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Hosts;
+namespace App\Http\Controllers\Host;
 
 use App\Http\Controllers\Controller;
 use App\Models\Host;

@@ -9,6 +9,15 @@ class Host extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'first_name',
+        'last_name',
+        'national_code',
+        'phone_number',
+        'email',
+        'address',
+    ];
+
     public function hotel()
     {
         return $this->hasOne(Hotel::class);

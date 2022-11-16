@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\Address\AddressController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\RegisterController;
@@ -9,8 +8,8 @@ use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Emails\EmailController;
 use App\Http\Controllers\Hosts\HostController;
 use App\Http\Controllers\Hotels\HotelController;
+use App\Http\Controllers\Registration\HotelRegistrationController;
 use App\Http\Controllers\Users\UserController;
-use App\Models\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -47,6 +46,8 @@ Route::prefix('v1')->group(function(){
     Route::resource('hotels',HotelController::class);
     //Email Routes
     Route::resource('emails',EmailController::class);
+    //Hotel Registeration request
+    Route::post('hotel-registeration',[HotelRegistrationController::class,'register']);
 
     //Protected Route test
     Route::middleware(['auth:sanctum','role:User'])->prefix('tests')->group(function(){
