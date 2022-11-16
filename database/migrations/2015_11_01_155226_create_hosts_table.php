@@ -17,8 +17,8 @@ return new class extends Migration
             $table->id();
             $table->string('first_name');
             $table->string('last_name');
-            $table->integer('national_code');
-            $table->integer('phone_number');
+            $table->bigInteger('national_code')->unique();
+            $table->bigInteger('phone_number');
             $table->string('email');
             $table->boolean('is_confirm')->default(false);
             $table->timestamps();
