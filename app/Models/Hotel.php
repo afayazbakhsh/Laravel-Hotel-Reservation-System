@@ -56,8 +56,8 @@ class Hotel extends Model
         return $this->hasMany(Feature::class);
     }
 
-    public function scopeConfirmed($query)
+    public function scopeConfirmed($query, $bool)
     {
-        return $query->where('is_confirm',0);
+        return $query->where('is_confirm', $bool);
     }
 }

@@ -25,6 +25,6 @@ class Host extends Model
 
     public function scopeConfirmed($query)
     {
-        return $query->where('is_confirm', 1);
+        return $query->where('is_confirm', 0);
     }
 }
