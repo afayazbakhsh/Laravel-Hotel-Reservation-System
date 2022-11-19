@@ -61,7 +61,6 @@ class HotelRegistration implements ShouldQueue
             'longitude'     => $this->request['hotel']['hotel_location'][0]['longitude']
         ])->toArray();
 
-        $images = $this->request['sample_images'];
 
         try {
             DB::beginTransaction();
@@ -72,13 +71,13 @@ class HotelRegistration implements ShouldQueue
             //try to save requested hotel address
             $address = $addressService->storeAddress($hotel, $requestedHotelLocation);
             //compress images one by one
-            if ($images || empty($images)) {
-                foreach ($images as $image) {
-                    Log::info($image);
-                    // try to commpress images
-                    $commpressImage = $compressImageService->compress($image);
-                }
-            }
+            // if ($this->request['sample_images']) {
+            //     foreach ($this->request['sample_images'] as $image) {
+            //         Log::info($image);
+            //         // try to commpress images
+            //         $commpressImage = $compressImageService->compress($image);
+            //     }
+            // }
 
             DB::commit();
         } catch (\Exception $exception) {
