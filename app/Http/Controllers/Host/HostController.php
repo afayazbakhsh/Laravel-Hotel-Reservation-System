@@ -11,12 +11,6 @@ class HostController extends Controller
     public function index()
     {
 
-        return Host::where('is_confirm', false)->with([
-            'hotel' => [
-                'address',
-                'emails',
-                'phones'
-            ]
-        ])->get();
+        return Host::confirmed()->with(['hotel'])->get();
     }
 }
