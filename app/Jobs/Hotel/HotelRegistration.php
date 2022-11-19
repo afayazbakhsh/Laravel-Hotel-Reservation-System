@@ -3,6 +3,7 @@
 namespace App\Jobs\Hotel;
 
 use App\Services\Address\AddressService;
+use App\Services\CompressImageService;
 use App\Services\Host\HostService;
 use App\Services\Hotel\HotelService;
 use Exception;
@@ -36,7 +37,7 @@ class HotelRegistration implements ShouldQueue
      *
      * @return void
      */
-    public function handle(HostService $hostService, HotelService $hotelService, AddressService $addressService)
+    public function handle(HostService $hostService, HotelService $hotelService, AddressService $addressService, CompressImageService $compressImageService)
     {
         // Requester data
         $requesterInfo = collect([
@@ -60,14 +61,25 @@ class HotelRegistration implements ShouldQueue
             'longitude'     => $this->request['hotel']['hotel_location'][0]['longitude']
         ])->toArray();
 
+        $images = $this->request['sample_images'];
+
         try {
             DB::beginTransaction();
             //try to save requester information as host
-            $host = $hostService->createHost($requesterInfo);
+            $host = $hostService->storeHost($requesterInfo);
             //try to save requested hotel details
-            $hotel = $hotelService->createHotel($host, $requestedHotel);
+            $hotel = $hotelService->storeHotel($host, $requestedHotel);
             //try to save requested hotel address
             $address = $addressService->storeAddress($hotel, $requestedHotelLocation);
+            //compress images one by one
+            if ($images || empty($images)) {
+                foreach ($images as $image) {
+                    Log::info($image);
+                    // try to commpress images
+                    $commpressImage = $compressImageService->compress($image);
+                }
+            }
+
             DB::commit();
         } catch (\Exception $exception) {
             Log::error($exception->getMessage());
