@@ -195,9 +195,10 @@ return [
         App\Providers\HorizonServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
-        //Repository Provider
+        // Repository Provider
         App\Providers\RepositoryServiceProvider::class,
-
+        // Image intervention
+        Intervention\Image\ImageServiceProvider::class
     ],
 
     /*
@@ -212,7 +213,7 @@ return [
     */
 
     'aliases' => Facade::defaultAliases()->merge([
-        // 'ExampleClass' => App\Example\ExampleClass::class,
+        'Image' => Intervention\Image\ImageManagerStatic::class,
     ])->toArray(),
 
 ];
