@@ -8,6 +8,7 @@ use App\Http\Requests\Hotel\UpdateHotelRequest;
 use App\Models\Host;
 use App\Models\Hotel;
 use App\Services\Hotel\HotelService;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -30,7 +31,7 @@ class HotelController extends Controller
             'emails:id,email,emailable_id,emailable_type',
             'address:id,address,addressable_id,addressable_type',
             'city'
-        ])->confirmed()->latest()->get();
+        ])->whereNot('name',null)->confirmed()->latest()->get();
 
         // if chose city
         if ($request->has('city_id')) {
@@ -42,6 +43,7 @@ class HotelController extends Controller
         if ($request->has('s')) {
 
             $query = strtolower($request->get('s'));
+
             $hotels = $hotels->filter(function ($hotel) use ($query) {
 
                 if (Str::contains(strtolower($hotel->title), $query)) {
@@ -56,6 +58,7 @@ class HotelController extends Controller
 
                 return false;
             });
+
         }
         return response(compact('hotels'), 200);
     }
