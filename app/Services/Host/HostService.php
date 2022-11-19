@@ -6,7 +6,7 @@ use App\Models\Host;
 
 class HostService
 {
-    public function createHost(array $requester)
+    public function storeHost(array $requester)
     {
         return Host::create([
             'first_name'    => $requester['first_name'],

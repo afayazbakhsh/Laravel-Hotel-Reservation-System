@@ -6,10 +6,10 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Emails\EmailController;
-use App\Http\Controllers\Hosts\HostController;
-use App\Http\Controllers\Hotels\HotelController;
+use App\Http\Controllers\Host\HostController;
+use App\Http\Controllers\Hotel\HotelController;
 use App\Http\Controllers\Registration\HotelRegistrationController;
-use App\Http\Controllers\Users\UserController;
+use App\Http\Controllers\User\UserController;
 
 /*
 |--------------------------------------------------------------------------

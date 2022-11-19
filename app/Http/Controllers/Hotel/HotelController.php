@@ -26,11 +26,11 @@ class HotelController extends Controller
 
     public function index(Request $request)
     {
-        $hotels =  Hotel::where('is_confirm', false)->with([
+        $hotels = Hotel::with([
             'emails:id,email,emailable_id,emailable_type',
             'address:id,address,addressable_id,addressable_type',
             'city'
-        ])->latest()->get();
+        ])->confirmed()->latest()->get();
 
         // if chose city
         if ($request->has('city_id')) {
