@@ -23,7 +23,7 @@ class HotelService
         }
     }
 
-    public function createHotel(Host $host, array $hotel)
+    public function storeHotel(Host $host, array $hotel)
     {
         return $host->hotel()->create([
             'name'      => $hotel['name'],
