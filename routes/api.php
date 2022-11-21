@@ -10,6 +10,9 @@ use App\Http\Controllers\Host\HostController;
 use App\Http\Controllers\Hotel\HotelController;
 use App\Http\Controllers\Registration\HotelRegistrationController;
 use App\Http\Controllers\User\UserController;
+use App\Models\Hotel;
+use App\Models\User;
+use App\Services\ImageService;
 
 /*
 |--------------------------------------------------------------------------
@@ -47,10 +50,23 @@ Route::prefix('v1')->group(function(){
     //Email Routes
     Route::resource('emails',EmailController::class);
     //Hotel Registeration request
-    Route::post('hotel-registeration',[HotelRegistrationController::class,'register']);
+    Route::post('hotel-registeration',HotelRegistrationController::class);
 
     //Protected Route test
     Route::middleware(['auth:sanctum','role:User'])->prefix('tests')->group(function(){
         Route::resource('/',TestController::class);
+    });
+
+    Route::get('image',function(){
+        $images = [
+            'app/demo/aaa1.jpg',
+            'app/demo/aaa2.jpg',
+            'app/demo/aaa3.jpg'
+        ];
+        $hotel = Hotel::find(2);
+        $service = new ImageService();
+        foreach($images as $image){
+            $service->compressAndStoreImage($hotel, $image , 'hotel_images_collection');
+        }
     });
 });
