@@ -197,8 +197,6 @@ return [
         Spatie\Permission\PermissionServiceProvider::class,
         // Repository Provider
         App\Providers\RepositoryServiceProvider::class,
-        // Image intervention
-        Intervention\Image\ImageServiceProvider::class
     ],
 
     /*
@@ -213,7 +211,6 @@ return [
     */
 
     'aliases' => Facade::defaultAliases()->merge([
-        'Image' => Intervention\Image\ImageManagerStatic::class,
     ])->toArray(),
 
 ];
