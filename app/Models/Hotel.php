@@ -4,10 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\Image\Manipulations;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
-class Hotel extends Model
+class Hotel extends Model implements HasMedia
 {
-    use HasFactory;
+    use HasFactory, InteractsWithMedia;
 
     protected $fillable = [
         'name',
@@ -59,5 +63,19 @@ class Hotel extends Model
     public function scopeConfirmed($query, $bool)
     {
         return $query->where('is_confirm', $bool);
+    }
+
+    public function registerMediaConversions(Media $media = null): void
+    {
+        $this->addMediaConversion('thumb')
+              ->width(368)
+              ->height(232);
+    }
+
+
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('hotel_images_collection');
+
     }
 }
