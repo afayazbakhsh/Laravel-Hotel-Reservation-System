@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Log;
 
 class HotelRegistrationController extends Controller
 {
-    public function register(Request $request)
+    public function __invoke(Request $request)
     {
         // Some step to store hotel information in job
         HotelRegistration::dispatch($request->all());

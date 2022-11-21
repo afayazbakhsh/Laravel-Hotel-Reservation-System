@@ -3,7 +3,6 @@
 namespace App\Jobs\Hotel;
 
 use App\Services\Address\AddressService;
-use App\Services\CompressImageService;
 use App\Services\Host\HostService;
 use App\Services\Hotel\HotelService;
 use Exception;
