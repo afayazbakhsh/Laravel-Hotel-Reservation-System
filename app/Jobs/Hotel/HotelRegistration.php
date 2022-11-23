@@ -5,6 +5,7 @@ namespace App\Jobs\Hotel;
 use App\Services\Address\AddressService;
 use App\Services\Host\HostService;
 use App\Services\Hotel\HotelService;
+use App\Services\ImageService;
 use Exception;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
@@ -36,7 +37,7 @@ class HotelRegistration implements ShouldQueue
      *
      * @return void
      */
-    public function handle(HostService $hostService, HotelService $hotelService, AddressService $addressService, CompressImageService $compressImageService)
+    public function handle(HostService $hostService, HotelService $hotelService, AddressService $addressService, ImageService $compressImageService)
     {
         // Requester data
         $requesterInfo = collect([
