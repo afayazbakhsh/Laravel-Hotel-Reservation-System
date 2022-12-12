@@ -18,6 +18,7 @@ class HotelResource extends JsonResource
             'name' => $this->name,
             'title' => $this->title,
             'is_confirm' => $this->is_confirm,
+            'description' => $this->description
         ];
     }
 }
