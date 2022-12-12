@@ -4,11 +4,9 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use App\Interfaces\ConvertServiceInterface;
-use App\Interfaces\HostServiceInterface;
-use App\Interfaces\HotelServiceInterface;
-use App\Repositories\HostService;
-use App\Repositories\HotelService;
 use App\Services\ConvertService;
+use App\Models\Host;
+use App\Observers\HostObserver;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -36,6 +34,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Host::observe(HostObserver::class);
     }
 }
