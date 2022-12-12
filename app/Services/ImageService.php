@@ -2,9 +2,6 @@
 
 namespace App\Services;
 
-use App\Models\Hotel;
-use Illuminate\Support\Facades\Storage;
-
 class ImageService
 {
 
