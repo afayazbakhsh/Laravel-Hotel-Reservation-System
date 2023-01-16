@@ -33,7 +33,7 @@ class HotelController extends Controller
             'city'
         ])->whereNot('name',null)->confirmed()->latest()->get();
 
-        // if chose city
+        // if choose city
         if ($request->has('city_id')) {
 
             $hotels = $hotels->where('city_id', $request->get('city_id'));
