@@ -25,7 +25,6 @@ class UpdateHotelRequest extends FormRequest
     {
         return [
             'name'      => 'required|max:300',
-            'user_id'   => 'required|exists:users,id',
             'city_id'   => 'required|exists:cities,id',
         ];
     }
