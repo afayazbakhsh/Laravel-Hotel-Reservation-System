@@ -45,8 +45,6 @@ Route::prefix('v1')->group(function(){
     Route::resource('users',UserController::class);
     //Host Routes
     Route::resource('hosts',HostController::class);
-    //Hotel Routes
-    Route::resource('hotels',HotelController::class);
     //Email Routes
     Route::resource('emails',EmailController::class);
     //Hotel Registeration request
@@ -55,6 +53,19 @@ Route::prefix('v1')->group(function(){
     //Protected Route test
     Route::middleware(['auth:sanctum','role:User'])->prefix('tests')->group(function(){
         Route::resource('/',TestController::class);
+    });
+
+    // Hotel Routes
+    Route::prefix('/')->group(function(){
+
+        Route::get('hotels/',[HotelController::class,'index']);
+
+        Route::post('hosts/{host}/hotels',[HotelController::class,'store']);
+
+        Route::get('hosts/{host}/hotels/{hotel}',[HotelController::class,'show']);
+
+        Route::put('hosts/{host}/hotels/{hotel}',[HotelController::class,'update']);
+
     });
 
     Route::get('image',function(){
