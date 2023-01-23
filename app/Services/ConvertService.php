@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Storage;
 
 class ConvertService implements ConvertServiceInterface
 {
-    //****** this service contains all method for convert format ******//
+    //****** this service contains all method for converting ******//
 
     //convert excel data to array
     public function ExcelToArray(string $filePath): array
