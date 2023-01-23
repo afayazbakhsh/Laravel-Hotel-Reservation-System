@@ -10,6 +10,7 @@ use App\Models\Hotel;
 use App\Services\Hotel\HotelService;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 class HotelController extends Controller
@@ -31,7 +32,7 @@ class HotelController extends Controller
             'emails:id,email,emailable_id,emailable_type',
             'address:id,address,addressable_id,addressable_type',
             'city'
-        ])->whereNot('name',null)->confirmed()->latest()->get();
+        ])->whereNot('name', null)->confirmed()->latest()->get();
 
         // if choose city
         if ($request->has('city_id')) {
@@ -58,18 +59,8 @@ class HotelController extends Controller
 
                 return false;
             });
-
         }
         return response(compact('hotels'), 200);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
     }
 
     /**
@@ -80,15 +71,17 @@ class HotelController extends Controller
      */
     public function store(Host $host, StoreHotelRequest $request)
     {
-        $hotel = $host->hotels()->create($request->validated());
+        // Create hotel with validated inputs
+        $hotel = $host->hotel()->create($request->validated());
 
+        // Create emails
         if ($request->emails) {
 
             $this->hotelService->createEmail($hotel, $request->emails);
         }
         $hotel->emails;
         $hotel->host;
-        return response(compact('hotel'), 201);
+        return response([$hotel], 201);
     }
 
     /**
@@ -97,7 +90,7 @@ class HotelController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Host $host, Hotel $hotel)
     {
         $hotel = Hotel::with([
             'emails' => function ($query) {
@@ -109,20 +102,9 @@ class HotelController extends Controller
                 $query->orderBy('created_at', 'desc');
             },
             'address', 'city'
-        ])->find($id);
+        ])->find($hotel->id);
 
         return response([compact(['hotel']), 200]);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
     }
 
     /**
@@ -132,9 +114,8 @@ class HotelController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateHotelRequest $request, $id)
+    public function update(UpdateHotelRequest $request, Host $host, Hotel $hotel)
     {
-        $hotel = Hotel::findOrFail($id);
         $hotel->update($request->validated());
         $hotel->emails;
 
