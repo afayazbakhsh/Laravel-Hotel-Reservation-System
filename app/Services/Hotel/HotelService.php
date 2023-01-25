@@ -9,11 +9,6 @@ class HotelService
 {
     protected $hotel;
 
-    public function __construct(Hotel $hotel)
-    {
-        $this->hotel = $hotel;
-    }
-
     public function createEmail(Hotel $hotel, $emails)
     {
         foreach ($emails as $email) {

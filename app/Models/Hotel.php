@@ -60,7 +60,7 @@ class Hotel extends Model implements HasMedia
         return $this->hasMany(Feature::class);
     }
 
-    public function scopeConfirmed($query, $bool)
+    public function scopeConfirmed($query, $bool = false)
     {
         return $query->where('is_confirm', $bool);
     }
