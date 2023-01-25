@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\Host;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -10,33 +11,46 @@ use Illuminate\Testing\Fluent\AssertableJson;
 class HostTest extends TestCase
 {
     use RefreshDatabase;
-    /**
-     * A basic feature test example.
-     *
-     * @return void
-     */
-    public function test_get_hosts()
+
+    public function setUp(): void
     {
+        parent::setUp();
         $this->seed();
+        $this->assertDatabaseCount('hosts', 100);
+    }
 
-        $response = $this->get('api/v1/hosts');
+    public function test_search_hosts_with_national_code()
+    {
+        // Run seeder and factory to get data
+        $host = Host::factory()->create();
 
-        // $response->assertJsonCount(100, 'data');
+        $response = $this->getJson('api/v1/hosts', ['national_code' => $host->national_code]);
+
+        $response->assertStatus(200);
+
+        // Test json structure
+        $response->assertJsonStructure([
+            'data' => [
+                '0' => [
+                    'id',
+                    'national_code'
+                ]
+            ]
+        ]);
+        // national code is unique
+        $response->assertJsonCount(1);
 
         $response->assertJson(
             fn (AssertableJson $json) =>
-
             $json
                 ->has('data')
-                ->has(
-                    'data.0',
+                ->first(
                     fn ($json) =>
-                    $json->whereType('national_code', 'integer')
-                        ->has('hotel')
-                        ->whereType('hotel.is_confirm', 'integer')
+
+                    $json->whereType('0.national_code', 'integer')
+                        ->has('0.national_code')
                         ->etc()
                 )
         );
-        $response->assertStatus(200);
     }
 }
