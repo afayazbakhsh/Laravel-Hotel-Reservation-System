@@ -23,8 +23,8 @@ class Host extends Model
         return $this->hasOne(Hotel::class);
     }
 
-    public function scopeConfirmed($query)
+    public function scopeConfirmed($query,$bool = false)
     {
-        return $query->where('is_confirm', 0);
+        return $query->where('is_confirm', $bool);
     }
 }
