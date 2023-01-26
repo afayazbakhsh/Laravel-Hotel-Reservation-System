@@ -79,8 +79,8 @@ class HotelController extends Controller
 
             $this->hotelService->createEmail($hotel, $request->emails);
         }
-        $hotel->emails;
-        $hotel->host;
+        $hotel->load('emails');
+        $hotel->load('host');
         return response([$hotel], 201);
     }
 

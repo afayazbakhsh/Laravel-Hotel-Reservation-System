@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\Permission\Traits\HasRoles;
 
 
@@ -36,7 +37,7 @@ class User extends Authenticatable
     ];
 
     /**
-     * The attributes that should be cast.
+     * The attributes should be cast.
      *
      * @var array<string, string>
      */
@@ -52,7 +53,7 @@ class User extends Authenticatable
         );
     }
 
-    public function hotels()
+    public function hotels(): HasMany
     {
         return $this->hasMany(Hotel::class);
     }
