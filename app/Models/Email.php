@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 class Email extends Model
 {
@@ -13,7 +14,7 @@ class Email extends Model
         'email',
     ];
 
-    public function Emailable()
+    public function Emailable(): MorphTo
     {
         return $this->morphTo();
     }

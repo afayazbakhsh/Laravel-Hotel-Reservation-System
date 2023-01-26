@@ -4,6 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
+use Illuminate\Database\Eloquent\Relations\BlongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Image\Manipulations;
@@ -20,42 +25,42 @@ class Hotel extends Model implements HasMedia
     ];
 
 
-    public function address()
+    public function address(): MorphOne
     {
         return $this->morphOne(Address::class, 'addressable');
     }
 
-    public function phones()
+    public function phones(): MorphMany
     {
         return $this->morphMany(Phone::class, 'phoneable');
     }
 
-    public function emails()
+    public function emails(): MorphMany
     {
         return $this->morphMany(Email::class, 'emailable');
     }
 
-    public function city()
+    public function city(): BelongsTo
     {
         return $this->belongsTo(City::class);
     }
 
-    public function user()
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    public function newestEmail()
+    public function newestEmail(): MorphOne
     {
         return $this->morphOne(Email::class, 'emailable')->latestOfMany();
     }
 
-    public function host()
+    public function host(): BelongsTo
     {
         return $this->belongsTo(Host::class);
     }
 
-    public function features()
+    public function features(): HasMany
     {
         return $this->hasMany(Feature::class);
     }
@@ -68,14 +73,13 @@ class Hotel extends Model implements HasMedia
     public function registerMediaConversions(Media $media = null): void
     {
         $this->addMediaConversion('thumb')
-              ->width(368)
-              ->height(232);
+            ->width(368)
+            ->height(232);
     }
 
 
     public function registerMediaCollections(): void
     {
         $this->addMediaCollection('hotel_images_collection');
-
     }
 }
