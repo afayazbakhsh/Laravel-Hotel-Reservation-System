@@ -23,7 +23,7 @@ class HostSeeder extends Seeder
     {
         $types = RoomType::all();
         // Create host factory with hotel
-        return Host::factory()->times(100)->create()->each(function ($host) use ($types) {
+        return Host::factory()->times(5)->create()->each(function ($host) use ($types) {
 
             // Create hotel with child entity
             Hotel::factory(1)->create([
