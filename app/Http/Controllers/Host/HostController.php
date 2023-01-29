@@ -10,6 +10,13 @@ use Illuminate\Http\Request;
 
 class HostController extends Controller
 {
+
+    /**
+	 * Create a user
+	 *
+	 * [Insert optional longer description of the API endpoint here.]
+	 *
+	 */
     public function index(Request $request)
     {
         // get hosts who has a hotel
