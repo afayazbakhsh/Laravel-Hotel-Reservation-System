@@ -5,13 +5,11 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
-use App\Http\Controllers\Emails\EmailController;
 use App\Http\Controllers\Host\HostController;
 use App\Http\Controllers\Hotel\HotelController;
 use App\Http\Controllers\Registration\HotelRegistrationController;
 use App\Http\Controllers\User\UserController;
 use App\Models\Hotel;
-use App\Models\User;
 use App\Services\ImageService;
 
 /*
@@ -45,15 +43,8 @@ Route::prefix('v1')->group(function(){
     Route::resource('users',UserController::class);
     //Host Routes
     Route::resource('hosts',HostController::class);
-    //Email Routes
-    Route::resource('emails',EmailController::class);
     //Hotel Registeration request
     Route::post('hotel-registeration',HotelRegistrationController::class);
-
-    //Protected Route test
-    Route::middleware(['auth:sanctum','role:User'])->prefix('tests')->group(function(){
-        Route::resource('/',TestController::class);
-    });
 
     // Hotel Routes
     Route::prefix('/')->group(function(){
