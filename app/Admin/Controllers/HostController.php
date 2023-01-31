@@ -53,10 +53,16 @@ class HostController extends AdminController
         $show->field('national_code', __('National code'));
         $show->field('phone_number', __('Phone number'));
         $show->field('email', __('Email'));
-        $show->field('is_confirm', __('Is confirm'));
+        $show->field('is_confirm', __('Is confirm'))->bool();
         $show->field('created_at', __('Created at'));
         $show->field('updated_at', __('Updated at'));
         $show->field('deleted_at', __('Deleted at'));
+
+        $show->hotel('The host hotels information', function ($host) {
+
+            $host->setResource('/admin/hotels');
+            $host->name();
+        });
 
         return $show;
     }
