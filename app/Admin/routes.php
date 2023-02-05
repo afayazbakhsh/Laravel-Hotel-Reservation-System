@@ -14,4 +14,5 @@ Route::group([
     $router->get('/', 'HomeController@index')->name('home');
     $router->resource('demo/users', UserController::class);
     $router->resource('hosts', HostController::class);
+    $router->resource('hotels', HotelController::class);
 });

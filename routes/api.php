@@ -1,6 +1,4 @@
 <?php
-
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\LoginController;
@@ -9,8 +7,6 @@ use App\Http\Controllers\Host\HostController;
 use App\Http\Controllers\Hotel\HotelController;
 use App\Http\Controllers\Registration\HotelRegistrationController;
 use App\Http\Controllers\User\UserController;
-use App\Models\Hotel;
-use App\Services\ImageService;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,48 +23,34 @@ use App\Services\ImageService;
 //     return $request->user();
 // });
 
-Route::prefix('v1')->group(function(){
+Route::prefix('v1')->group(function () {
 
     //Auth Route
-    Route::prefix('auth')->group(function(){
+    Route::prefix('auth')->group(function () {
         //Register
-        Route::post('register',[RegisterController::class,'register']);
+        Route::post('register', [RegisterController::class, 'register']);
         //Login
-        Route::post('login',[LoginController::class,'login']);
+        Route::post('login', [LoginController::class, 'login']);
         //Logout
-        Route::middleware('auth:sanctum')->get('logout',[LogoutController::class,'logout']);
+        Route::middleware('auth:sanctum')->get('logout', [LogoutController::class, 'logout']);
     });
 
     //User Routes
-    Route::resource('users',UserController::class);
+    Route::resource('users', UserController::class);
     //Host Routes
-    Route::resource('hosts',HostController::class);
+    Route::resource('hosts', HostController::class);
     //Hotel Registeration request
-    Route::post('hotel-registeration',HotelRegistrationController::class);
+    Route::post('hotel-registeration', HotelRegistrationController::class);
 
     // Hotel Routes
-    Route::prefix('/')->group(function(){
+    Route::prefix('/')->group(function () {
 
-        Route::get('hotels/',[HotelController::class,'index']);
+        Route::get('hotels/', [HotelController::class, 'index']);
 
-        Route::post('hosts/{host}/hotels',[HotelController::class,'store']);
+        Route::post('hosts/{host}/hotels', [HotelController::class, 'store']);
 
-        Route::get('hosts/{host}/hotels/{hotel}',[HotelController::class,'show']);
+        Route::get('hosts/{host}/hotels/{hotel}', [HotelController::class, 'show']);
 
-        Route::put('hosts/{host}/hotels/{hotel}',[HotelController::class,'update']);
-
-    });
-
-    Route::get('image',function(){
-        $images = [
-            'app/demo/aaa1.jpg',
-            'app/demo/aaa2.jpg',
-            'app/demo/aaa3.jpg'
-        ];
-        $hotel = Hotel::find(2);
-        $service = new ImageService();
-        foreach($images as $image){
-            $service->compressAndStoreImage($hotel, $image , 'hotel_images_collection');
-        }
+        Route::put('hosts/{host}/hotels/{hotel}', [HotelController::class, 'update']);
     });
 });
