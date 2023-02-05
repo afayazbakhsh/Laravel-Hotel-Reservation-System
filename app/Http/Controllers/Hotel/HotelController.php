@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Hotel;
 
+use App\Events\Hotel\HotelCreated;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Hotel\StoreHotelRequest;
 use App\Http\Requests\Hotel\UpdateHotelRequest;
@@ -74,14 +75,14 @@ class HotelController extends Controller
         // Create hotel with validated inputs
         $hotel = $host->hotel()->create($request->validated());
 
-        // Create emails
-        if ($request->emails) {
+        // fire event after hotel created
+        event(new HotelCreated($hotel, $request));
 
-            $this->hotelService->createEmail($hotel, $request->emails);
-        }
+        // load emails and host information
         $hotel->load('emails');
         $hotel->load('host');
-        return response([$hotel], 201);
+
+        return response($hotel, 201);
     }
 
     /**
@@ -104,7 +105,7 @@ class HotelController extends Controller
             'address', 'city'
         ])->find($hotel->id);
 
-        return response([compact(['hotel']), 200]);
+        return response($hotel, 200);
     }
 
     /**
