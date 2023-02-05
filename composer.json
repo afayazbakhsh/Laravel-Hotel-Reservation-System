@@ -13,6 +13,7 @@
         "laravel/horizon": "^5.10",
         "laravel/sanctum": "^3.0",
         "laravel/tinker": "^2.7",
+        "league/flysystem-aws-s3-v3": "^3.12",
         "phpoffice/phpspreadsheet": "^1.26",
         "predis/predis": "^2.0",
         "spatie/laravel-medialibrary": "^10.0.0",
