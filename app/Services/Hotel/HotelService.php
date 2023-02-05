@@ -9,13 +9,11 @@ class HotelService
 {
     protected $hotel;
 
-    public function createEmail(Hotel $hotel, $emails)
+    public function createEmail(Hotel $hotel, $email)
     {
-        foreach ($emails as $email) {
-            $hotel->emails()->create([
-                'email' => $email,
-            ]);
-        }
+        $hotel->emails()->create([
+            'email' => $email,
+        ]);
     }
 
     public function storeHotel(Host $host, array $hotel)
