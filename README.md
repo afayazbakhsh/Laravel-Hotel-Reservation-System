@@ -31,7 +31,8 @@ A free REST API program for hotel reservation, powered by Laravel. This project 
     composer install
 
     Set up environment variables:
-    cp .env.example .env and configure your environment variables in the .env file 
+    cp .env.example .env and configure your environment variables in the .env file
+    
     Generate a key:
     php artisan key:generate 
 
