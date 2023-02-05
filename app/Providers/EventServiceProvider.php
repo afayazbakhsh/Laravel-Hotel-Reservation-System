@@ -3,15 +3,12 @@
 namespace App\Providers;
 
 use App\Events\Host\HostRequestedRegistration;
-use App\Events\Hotel\HotelRequestedRegistration;
-use App\Events\Hotel\UpdateHotel;
-use App\Listeners\Host\CreateHost;
-use App\Listeners\Hotel\CreateHotel;
-use App\Listeners\Hotel\UpdateEmail;
+use App\Events\Hotel\HotelCreated;
+use App\Listeners\Hotel\CreateEmail;
+use App\Listeners\Hotel\UploadImage;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
-use Illuminate\Support\Facades\Event;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -24,18 +21,9 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
-        UpdateHotel::class => [
-            UpdateEmail::class,
-        ],
-
-        HostRequestedRegistration::class => [
-
-            CreateHost::class,
-        ],
-
-        HotelRequestedRegistration::class => [
-
-            CreateHotel::class,
+        HotelCreated::class => [
+            CreateEmail::class,
+            UploadImage::class
         ],
     ];
 
@@ -46,7 +34,6 @@ class EventServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-
     }
 
     /**
