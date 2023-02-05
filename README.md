@@ -22,26 +22,25 @@ A free REST API program for hotel reservation, powered by Laravel. This project 
 ### Installation
 
     Clone the repository:
-    ```git clone https://github.com/YOUR_USERNAME/laravel-hotel-reservation-system.git ```
+    git clone https://github.com/YOUR_USERNAME/laravel-hotel-reservation-system.git
 
     Navigate to the project directory:
-    ```cd laravel-hotel-reservation-system```
+    cd laravel-hotel-reservation-system
 
     Install dependencies:
-    ```composer install```
+    composer install
 
     Set up environment variables:
-    ``` cp .env.example .env and configure your environment variables in the .env file ```
+    cp .env.example .env and configure your environment variables in the .env file 
     Generate a key:
-    ``` php artisan key:generate ```
+    php artisan key:generate 
 
     Run the migrations and seed:
-     ```php artisan migrate --seed```
+    php artisan migrate --seed
 
-    Start the development server:
-    ```    
-     php artisan serve
-     ```
+    Start the development server: 
+    php artisan serve
+     
 
 ## Contributing
 
