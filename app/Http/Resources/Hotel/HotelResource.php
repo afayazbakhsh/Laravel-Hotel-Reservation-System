@@ -2,6 +2,10 @@
 
 namespace App\Http\Resources\Hotel;
 
+use App\Http\Resources\Address\AddressResource;
+use App\Http\Resources\City\CityResource;
+use App\Http\Resources\Email\EmailResource;
+use App\Http\Resources\HostResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class HotelResource extends JsonResource
@@ -15,13 +19,17 @@ class HotelResource extends JsonResource
     public function toArray($request)
     {
         return [
+            'id' => $this->id,
             'name' => $this->name,
             'title' => $this->title,
-            'is_confirm' => $this->is_confirm,
-            'city_id' => $this->city_id,
+            'slug' => $this->slug,
             'description' => $this->description,
-            'city'  => $this->city,
-            'address'  => $this->address
+            'moto' => $this->description,
+            'is_confirm' => $this->is_confirm,
+            'city'  => new CityResource($this->whenLoaded('city')),
+            'address'  => new AddressResource($this->whenLoaded('address')),
+            'emails'  => EmailResource::collection($this->whenLoaded('emails')),
+            'host'  => new HostResource($this->whenLoaded('host')),
         ];
     }
 }
