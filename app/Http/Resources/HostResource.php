@@ -23,8 +23,6 @@ class HostResource extends JsonResource
             'first_name' => $this->first_name,
             'last_name' => $this->last_name,
             'email' => $this->email,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
             'hotel' => new HotelResource($this->whenLoaded('hotel')),
         ];
     }
