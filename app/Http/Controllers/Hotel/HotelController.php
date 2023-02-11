@@ -6,10 +6,11 @@ use App\Events\Hotel\HotelCreated;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Hotel\StoreHotelRequest;
 use App\Http\Requests\Hotel\UpdateHotelRequest;
+use App\Http\Resources\Hotel\HotelCollection;
+use App\Http\Resources\Hotel\HotelResource;
 use App\Models\Host;
 use App\Models\Hotel;
 use App\Services\Hotel\HotelService;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
@@ -22,17 +23,22 @@ class HotelController extends Controller
      * @return \Illuminate\Http\Response
      */
     public $hotelService;
+
     public function __construct(HotelService $hotelService)
     {
         $this->hotelService = $hotelService;
     }
 
+    // Display hotels
     public function index(Request $request)
     {
+        // Get Hotel with children
         $hotels = Hotel::with([
-            'emails:id,email,emailable_id,emailable_type',
-            'address:id,address,addressable_id,addressable_type',
-            'city'
+            'host',
+            'emails',
+            'address',
+            'city',
+            'phones'
         ])->whereNot('name', null)->confirmed()->latest()->get();
 
         // if choose city
@@ -48,11 +54,13 @@ class HotelController extends Controller
 
             $hotels = $hotels->filter(function ($hotel) use ($query) {
 
+                // search in titles
                 if (Str::contains(strtolower($hotel->title), $query)) {
 
                     return true;
                 }
 
+                // search in names
                 if (Str::contains(strtolower($hotel->name), $query)) {
 
                     return true;
@@ -61,14 +69,12 @@ class HotelController extends Controller
                 return false;
             });
         }
-        return response(compact('hotels'), 200);
+
+        return response(new HotelCollection($hotels), 200);
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * Create new hotel.
      */
     public function store(Host $host, StoreHotelRequest $request)
     {
@@ -102,14 +108,14 @@ class HotelController extends Controller
 
                 $query->orderBy('created_at', 'desc');
             },
-            'address', 'city'
+            'address','city'
         ])->find($hotel->id);
 
-        return response($hotel, 200);
+        return response(new HotelResource($hotel), 200);
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified resource.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
@@ -124,7 +130,7 @@ class HotelController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified resource.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
