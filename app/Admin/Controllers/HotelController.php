@@ -2,7 +2,10 @@
 
 namespace App\Admin\Controllers;
 
+use App\Models\City;
+use App\Models\Host;
 use App\Models\Hotel;
+
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
@@ -50,7 +53,7 @@ class HotelController extends AdminController
 
         $show->field('id', __('Id'));
         $show->field('name', __('Name'));
-        $show->field('is_confirm', __('Is confirm'))->using([false => 'Not confirmed',true => 'Confirmed']);;
+        $show->field('is_confirm', __('Is confirm'))->using([false => 'Not confirmed', true => 'Confirmed']);;
         $show->field('title', __('Title'));
         $show->field('slug', __('Slug'));
         $show->field('description', __('Description'));
@@ -64,7 +67,7 @@ class HotelController extends AdminController
             $host->phone_number();
         });
 
-        $show->city('City name',function($city){
+        $show->city('City name', function ($city) {
             $city->name();
             $city->latitude();
             $city->longitude();
@@ -85,11 +88,18 @@ class HotelController extends AdminController
         $form->text('name', __('Name'));
         $form->switch('is_confirm', __('Is confirm'));
         $form->text('title', __('Title'));
-        $form->text('slug', __('Slug'));
+        $form->hidden('slug', __('Slug'));
         $form->text('description', __('Description'));
         $form->text('motto', __('Motto'));
-        $form->number('host_id', __('Host id'));
-        $form->number('city_id', __('City id'));
+        $form->select('host_id')->options(Host::all()->pluck('first_name', 'id'));
+        $form->select('city_id')->options(City::all()->pluck('name', 'id'));
+
+        // images information
+
+        // Multiple media field
+        $form->multipleMediaLibrary('photos', 'Photos')
+            ->responsive()
+            ->removable();
 
         return $form;
     }
