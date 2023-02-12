@@ -38,8 +38,9 @@ class HotelController extends Controller
             'emails',
             'address',
             'city',
-            'phones'
-        ])->whereNot('name', null)->confirmed()->latest()->get();
+            'phones',
+            'images'
+        ])->whereNot('name', null)->confirmed();
 
         // if choose city
         if ($request->has('city_id')) {
@@ -70,7 +71,7 @@ class HotelController extends Controller
             });
         }
 
-        return response(new HotelCollection($hotels), 200);
+        return response(new HotelCollection($hotels->latest()->paginate(15)), 200);
     }
 
     /**
@@ -108,7 +109,7 @@ class HotelController extends Controller
 
                 $query->orderBy('created_at', 'desc');
             },
-            'address','city'
+            'address', 'city'
         ])->find($hotel->id);
 
         return response(new HotelResource($hotel), 200);
