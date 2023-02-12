@@ -6,6 +6,8 @@ use App\Http\Resources\Address\AddressResource;
 use App\Http\Resources\City\CityResource;
 use App\Http\Resources\Email\EmailResource;
 use App\Http\Resources\HostResource;
+use App\Http\Resources\Image\ImageResource;
+use App\Http\Resources\Media\MediaResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class HotelResource extends JsonResource
@@ -30,6 +32,7 @@ class HotelResource extends JsonResource
             'address'  => new AddressResource($this->whenLoaded('address')),
             'emails'  => EmailResource::collection($this->whenLoaded('emails')),
             'host'  => new HostResource($this->whenLoaded('host')),
+            'images'  => MediaResource::collection($this->whenLoaded('images')),
         ];
     }
 }
