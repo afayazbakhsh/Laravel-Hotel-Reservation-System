@@ -70,6 +70,11 @@ class Hotel extends Model implements HasMedia
         return $query->where('is_confirm', $bool);
     }
 
+    public function images(): MorphMany
+    {
+        return $this->morphMany(Media::class, 'model');
+    }
+
     public function registerMediaConversions(Media $media = null): void
     {
         $this->addMediaConversion('thumb')
