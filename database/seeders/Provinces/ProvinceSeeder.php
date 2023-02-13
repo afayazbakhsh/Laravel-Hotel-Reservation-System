@@ -16,6 +16,8 @@ class ProvinceSeeder extends Seeder
      * @return void
      */
 
+    private $convertService;
+
     public function __construct(ConvertServiceInterface $service)
     {
         $this->convertService = $service;

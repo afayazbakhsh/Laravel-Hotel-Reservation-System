@@ -18,6 +18,8 @@ class CitySeeder extends Seeder
      * @return void
      */
 
+    private $convertService;
+
     public function __construct(ConvertServiceInterface $service)
     {
         $this->convertService = $service;
