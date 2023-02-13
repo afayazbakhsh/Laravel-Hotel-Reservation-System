@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Services;
-use Pishran\PersianString\PersianString;
+
 use App\Interfaces\ConvertServiceInterface;
 use Illuminate\Support\Facades\Log;
 use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
@@ -15,7 +15,7 @@ class ConvertService implements ConvertServiceInterface
     public function ExcelToArray(string $filePath): array
     {
         $reader = new Xlsx();
-        $data = $reader->load(Storage::path('public/' . $filePath));
+        $data = $reader->load(storage_path('app/public') . '/' . $filePath);
         return $data->getActiveSheet()->toArray();
     }
 
