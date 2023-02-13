@@ -21,9 +21,9 @@ class UserSeeder extends Seeder
             'password' => Hash::make('amir8787'),
         ]);
         //create token
-        $token = $user->createToken('auth_token')->plainTextToken;
+        $user->createToken('auth_token')->plainTextToken;
         $user->assignRole('super admin');
 
-        return User::factory()->times(100)->create();
+        return User::factory()->times(10)->create();
     }
 }
