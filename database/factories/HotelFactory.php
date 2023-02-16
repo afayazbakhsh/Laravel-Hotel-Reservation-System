@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\City;
+use App\Models\Host;
 use App\Models\Hotel;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
@@ -27,6 +28,7 @@ class HotelFactory extends Factory
             'description' => fake()->text(),
             'slug' => Str::slug($title),
             'city_id'=> City::all()->random()->id,
+            'host_id'=> Host::all()->random()->id,
         ];
     }
 }
