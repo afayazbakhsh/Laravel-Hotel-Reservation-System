@@ -40,13 +40,15 @@ class HotelController extends Controller
             'city',
             'phones',
             'images'
-        ])->whereNot('name', null)->confirmed();
+        ])->whereNot('name', null)->confirmed(false);
 
         // if choose city
-        if ($request->has('city_id')) {
+        if ($request->has('city')) {
 
-            $hotels = $hotels->where('city_id', $request->get('city_id'));
+            $hotels = $hotels->where('city_id', $request->get('city'));
         }
+
+        $hotels = $hotels->get();
 
         // Searched text
         if ($request->has('s')) {
@@ -71,7 +73,12 @@ class HotelController extends Controller
             });
         }
 
-        return response(new HotelCollection($hotels->latest()->paginate(15)), 200);
+        if ($hotels->isEmpty()) {
+
+            return response(['message' => 'Not found any result'], 404);
+        }
+
+        return response(new HotelCollection($hotels), 200);
     }
 
     /**
@@ -98,9 +105,9 @@ class HotelController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Host $host, Hotel $hotel)
+    public function show(Hotel $hotel)
     {
-        $hotel = Hotel::with([
+        $hotel->with([
             'emails' => function ($query) {
 
                 $query->orderBy('created_at', 'desc');
@@ -110,7 +117,7 @@ class HotelController extends Controller
                 $query->orderBy('created_at', 'desc');
             },
             'address', 'city'
-        ])->find($hotel->id);
+        ])->get();
 
         return response(new HotelResource($hotel), 200);
     }
