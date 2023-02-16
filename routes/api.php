@@ -1,4 +1,6 @@
 <?php
+
+use App\Admin\Controllers\HostController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\LoginController;
@@ -31,6 +33,9 @@ Route::prefix('v1')->group(function () {
         //Logout
         Route::middleware('auth:sanctum')->get('logout', [LogoutController::class, 'logout']);
     });
+
+    // Crud host
+    Route::apiResource('hosts',HostController::class);
 
     // Crud operation
     Route::apiResource('hotels',HotelController::class);
