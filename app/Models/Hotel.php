@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
-use Illuminate\Database\Eloquent\Relations\BlongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -20,8 +19,12 @@ class Hotel extends Model implements HasMedia
 
     protected $fillable = [
         'name',
+        'title',
+        'description',
+        'motto',
+        'slug',
         'city_id',
-        'user_id',
+        'host_id',
     ];
 
 
