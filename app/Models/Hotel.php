@@ -41,13 +41,14 @@ class Hotel extends Model implements HasMedia
         return [
             'id' => (int) $this->id,
             'name' => $this->name,
+            'title' => $this->title,
             'description' => $this->description,
         ];
     }
 
     public function searchableAs(): string
     {
-        return 'posts_index';
+        return 'hotels';
     }
 
     public function address(): MorphOne
