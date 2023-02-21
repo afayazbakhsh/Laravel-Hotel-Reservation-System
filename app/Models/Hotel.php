@@ -8,14 +8,16 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Laravel\Scout\Attributes\SearchUsingFullText;
+use Laravel\Scout\Attributes\SearchUsingPrefix;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
-use Spatie\Image\Manipulations;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use Laravel\Scout\Searchable;
 
 class Hotel extends Model implements HasMedia
 {
-    use HasFactory, InteractsWithMedia;
+    use HasFactory, InteractsWithMedia, Searchable;
 
     protected $fillable = [
         'name',
@@ -27,6 +29,26 @@ class Hotel extends Model implements HasMedia
         'host_id',
     ];
 
+    protected $casts = [
+
+        'is_confirm' => 'boolean',
+    ];
+
+    #[SearchUsingPrefix(['id', 'name'])]
+    #[SearchUsingFullText(['description'])]
+    public function toSearchableArray()
+    {
+        return [
+            'id' => (int) $this->id,
+            'name' => $this->name,
+            'description' => $this->description,
+        ];
+    }
+
+    public function searchableAs(): string
+    {
+        return 'posts_index';
+    }
 
     public function address(): MorphOne
     {

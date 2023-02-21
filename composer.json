@@ -8,12 +8,15 @@
         "php": "^8.0.2",
         "encore/laravel-admin": "^1.8",
         "guzzlehttp/guzzle": "^7.2",
+        "http-interop/http-factory-guzzle": "^1.2",
         "laravel-admin-ext/log-viewer": "^1.0",
         "laravel/framework": "^9.19",
         "laravel/horizon": "^5.10",
         "laravel/sanctum": "^3.0",
+        "laravel/scout": "^9.8",
         "laravel/tinker": "^2.7",
         "league/flysystem-aws-s3-v3": "^3.12",
+        "meilisearch/meilisearch-php": "^1.0",
         "phpoffice/phpspreadsheet": "^1.26",
         "predis/predis": "^2.0",
         "spatie/laravel-medialibrary": "^10.0.0",
@@ -67,7 +70,8 @@
         "preferred-install": "dist",
         "sort-packages": true,
         "allow-plugins": {
-            "pestphp/pest-plugin": true
+            "pestphp/pest-plugin": true,
+            "php-http/discovery": true
         }
     },
     "minimum-stability": "dev",
