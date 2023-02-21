@@ -18,6 +18,11 @@ A free REST API program for hotel reservation, powered by Laravel. This project 
     flysystem-aws
     phpspreadsheet
     spatie-medialibrary
+    scrib
+    laravel/sanctum
+    laravel/scout
+    meilisearch-php
+    predis
 
 ### Installation
 
