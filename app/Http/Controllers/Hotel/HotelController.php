@@ -42,7 +42,7 @@ class HotelController extends Controller
             'images'
         ])->whereNot('name', null)->confirmed(false);
 
-        // if choose city
+        // If choose city
         if ($request->has('city')) {
 
             $hotels = $hotels->where('city_id', $request->get('city'));
@@ -84,19 +84,23 @@ class HotelController extends Controller
     /**
      * Create new hotel.
      */
-    public function store(Host $host, StoreHotelRequest $request)
+    public function store(StoreHotelRequest $request)
     {
-        // Create hotel with validated inputs
-        $hotel = $host->hotel()->create($request->validated());
+        // Create hotel after validated inputs
+        $hotel = Hotel::create($request->validated() + [
+            'slug' => Str::slug($request->name),
+        ]);
 
-        // fire event after hotel created
+        // Fire event after hotel created
         event(new HotelCreated($hotel, $request));
 
-        // load emails and host information
+        // Load informations
         $hotel->load('emails');
         $hotel->load('host');
+        $hotel->load('images');
+        $hotel->load('city');
 
-        return response($hotel, 201);
+        return response(new HotelResource($hotel), 200);
     }
 
     /**
@@ -107,7 +111,7 @@ class HotelController extends Controller
      */
     public function show(Hotel $hotel)
     {
-        $hotel->with([
+        $hotel->load([
             'emails' => function ($query) {
 
                 $query->orderBy('created_at', 'desc');
@@ -117,7 +121,7 @@ class HotelController extends Controller
                 $query->orderBy('created_at', 'desc');
             },
             'address', 'city'
-        ])->get();
+        ]);
 
         return response(new HotelResource($hotel), 200);
     }
@@ -129,7 +133,7 @@ class HotelController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateHotelRequest $request, Host $host, Hotel $hotel)
+    public function update(UpdateHotelRequest $request, Hotel $hotel)
     {
         $hotel->update($request->validated());
         $hotel->emails;
@@ -143,9 +147,9 @@ class HotelController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Hotel $hotel)
     {
-        Hotel::findOrFail($id)->delete();
+        $hotel->delete();
         return response(['message' => 'Deleted successfuly', 200]);
     }
 
