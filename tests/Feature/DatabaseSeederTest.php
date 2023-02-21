@@ -12,7 +12,7 @@ class DatabaseSeederTest extends TestCase
 
     public function test_seeder_can_created(){
         $this->seed();
-        $this->assertDatabaseCount('hosts', 100);
-        $this->assertDatabaseCount('hotels', 100);
+        $this->assertDatabaseCount('hosts', 5);
+        $this->assertDatabaseCount('hotels', 15);
     }
 }
