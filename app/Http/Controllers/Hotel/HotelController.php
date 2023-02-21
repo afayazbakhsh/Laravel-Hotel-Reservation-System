@@ -10,6 +10,7 @@ use App\Http\Resources\Hotel\HotelCollection;
 use App\Http\Resources\Hotel\HotelResource;
 use App\Models\Host;
 use App\Models\Hotel;
+use App\Models\User;
 use App\Services\Hotel\HotelService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -22,14 +23,15 @@ class HotelController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public $hotelService;
 
-    public function __construct(HotelService $hotelService)
+    public function __construct(public HotelService $hotelService)
     {
-        $this->hotelService = $hotelService;
     }
 
-    // Display hotels
+
+    /**
+     * search hotels
+     **/
     public function index(Request $request)
     {
         // Get Hotel with children
@@ -82,8 +84,24 @@ class HotelController extends Controller
     }
 
     /**
+     * If we want use scout for search
+     **/
+
+    // public function index(Request $request)
+    // {
+    //     if ($request->has('s')) {
+
+    //         $hotels =  Hotel::search($request->get('s'))->get();
+    //     } else {
+    //         $hotels = Hotel::all();
+    //     }
+
+    //     return response(new hotelCollection($hotels));
+    // }
+
+    /**
      * Create new hotel.
-     */
+     **/
     public function store(StoreHotelRequest $request)
     {
         // Create hotel after validated inputs
