@@ -5,18 +5,17 @@ namespace App\Http\Controllers\Host;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\HostResource;
 use App\Models\Host;
-use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
 class HostController extends Controller
 {
 
     /**
-	 * Create a user
-	 *
-	 * [Insert optional longer description of the API endpoint here.]
-	 *
-	 */
+     * Create a user
+     *
+     * [Insert optional longer description of the API endpoint here.]
+     *
+     */
     public function index(Request $request)
     {
         // get hosts who has a hotel
