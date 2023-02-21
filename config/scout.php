@@ -134,7 +134,7 @@ return [
     */
 
     'meilisearch' => [
-        'host' => env('MEILISEARCH_HOST', '127.0.0.1:8000'),
+        'host' => env('MEILISEARCH_HOST', null),
         'key' => env('MEILISEARCH_KEY', null),
         'index-settings' => [
             'hotels' => [
