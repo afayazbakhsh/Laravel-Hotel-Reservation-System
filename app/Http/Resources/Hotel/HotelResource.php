@@ -26,7 +26,7 @@ class HotelResource extends JsonResource
             'title' => $this->title,
             'slug' => $this->slug,
             'description' => $this->description,
-            'moto' => $this->description,
+            'motto' => $this->moto,
             'is_confirm' => $this->is_confirm,
             'city'  => new CityResource($this->whenLoaded('city')),
             'address'  => new AddressResource($this->whenLoaded('address')),
