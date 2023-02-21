@@ -21,16 +21,16 @@ class HostSeeder extends Seeder
      */
     public function run()
     {
-        $types = RoomType::all();
+        // $types = RoomType::all();
         // Create host factory with hotel
-        return Host::factory()->times(5)->create()->each(function ($host) use ($types) {
+        return Host::factory()->times(5)->create()->each(function ($host) {
 
             // Create hotel with child entity
-            Hotel::factory(1)->create([
+            Hotel::factory(3)->create([
 
                 'host_id' => $host->id,
 
-            ])->each(function ($hotel) use ($types) {
+            ])->each(function ($hotel){
 
                 Address::factory(1)->create([
                     'addressable_id' => $hotel->id,
