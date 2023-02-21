@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Host extends Model
 {
@@ -19,9 +19,9 @@ class Host extends Model
         'address',
     ];
 
-    public function hotel() : HasOne
+    public function hotel() : HasMany
     {
-        return $this->hasOne(Hotel::class);
+        return $this->hasMany(Hotel::class);
     }
 
     public function scopeConfirmed($query,$bool = false)
