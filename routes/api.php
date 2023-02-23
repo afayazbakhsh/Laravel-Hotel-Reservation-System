@@ -34,9 +34,9 @@ Route::prefix('v1')->group(function () {
         Route::middleware('auth:sanctum')->get('logout', [LogoutController::class, 'logout']);
     });
 
-    // Crud host
-    Route::apiResource('hosts',HostController::class);
+    Route::middleware(['auth:sanctum', 'abilities:hotel-view,hotel-create'])->group(function () {
 
-    // Crud operation
-    Route::apiResource('hotels',HotelController::class);
+        Route::apiResource('hotels', HotelController::class);
+    });
+    Route::apiResource('hosts', HostController::class);
 });
